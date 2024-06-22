@@ -38,6 +38,7 @@ function App() {
   return (
     <>
       <div className="volleyBall w-screen h-screen">
+        <h1 className="text-center pb-2 ">Volleyball Point Tracker</h1>
         <div className="allscores  items-center gap-5 sm:flex-col">
           <div className="scoreBoard">
             <section className="teamA">
@@ -47,7 +48,7 @@ function App() {
               >
                 -
               </button>
-              <h3>Team A</h3>
+              <p>Team A</p>
               <button
                 className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
                 onClick={addTeamA}
@@ -55,14 +56,14 @@ function App() {
                 +
               </button>
             </section>
-            <section>
+            <section className="teamB">
               <button
                 className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
                 onClick={minusTeamB}
               >
                 -
               </button>
-              <h3>Team B</h3>
+              <p>Team B</p>
               <button
                 className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
                 onClick={addTeamB}
@@ -73,8 +74,8 @@ function App() {
           </div>
 
           <div className="scores sm:gap-0 gap-[8rem]">
-            <input name="teamA" value={teamA} disabled />
-            <input name="teamB" value={teamB} disabled />
+            <input type="text" name="teamA" value={teamA} disabled />
+            <input type="text" name="teamB" value={teamB} disabled />
           </div>
         </div>
 
@@ -95,12 +96,17 @@ function App() {
             </button>
           )}
         </div>
-
-        {round.map((item, index) => (
-          <div key={index} className="Board">
-            {item}
-          </div>
-        ))}
+        <div className="pb-1  pl-3">
+          {round.map((item, index) => (
+            <div className="flex">
+               <div key={index} className="Board p-1">
+              {item}
+            </div> 
+            <br />
+            </div>
+           
+          ))}
+        </div>
       </div>
     </>
   );
