@@ -2,6 +2,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Playwrite NG Modern", cursive;
+  font-optical-sizing: auto;
+
 }
 .volleyBall{
   background-color: rgb(225, 225, 5);
@@ -71,7 +74,7 @@ button{
 } 
 @media screen and (max-width : 640px){
   .volleyBall{
-    padding: 1px;
+    padding: 5px;
     width: 100vw;
     /* height: 100vh; */
   }
@@ -104,7 +107,7 @@ button{
     
   }
   .scores input{
-    margin-top: -65px;
+    margin-top: -70px;
    
   }
   .teamA, .teamB{

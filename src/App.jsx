@@ -38,16 +38,20 @@ function App() {
   return (
     <>
       <div className="volleyBall w-screen h-screen">
-        <h1 className="text-center pb-2 ">Volleyball Point Tracker</h1>
+        <h1 className="text-center pb-2 text-xl sm:text-2xl font-bold pt-4">Volleyball Point Tracker</h1>
         <div className="allscores  items-center gap-5 sm:flex-col">
           <div className="scoreBoard">
             <section className="teamA">
-              <button
-                className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
-                onClick={minusTeamA}
-              >
-                -
-              </button>
+              {teamA === 0 ? (
+                ""
+              ) : (
+                <button
+                  className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
+                  onClick={minusTeamA}
+                >
+                  -
+                </button>
+              )}
               <p>Team A</p>
               <button
                 className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
@@ -57,12 +61,16 @@ function App() {
               </button>
             </section>
             <section className="teamB">
-              <button
-                className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
-                onClick={minusTeamB}
-              >
-                -
-              </button>
+            {teamB === 0 ? (
+                ""
+              ) : (
+                <button
+                  className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
+                  onClick={minusTeamB}
+                >
+                  -
+                </button>
+              )}
               <p>Team B</p>
               <button
                 className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer w-[25px] mb-2"
@@ -99,12 +107,11 @@ function App() {
         <div className="pb-1  pl-3">
           {round.map((item, index) => (
             <div className="flex">
-               <div key={index} className="Board p-1">
-              {item}
-            </div> 
-            <br />
+              <div key={index} className="Board p-1">
+                {item}
+              </div>
+              <br />
             </div>
-           
           ))}
         </div>
       </div>
