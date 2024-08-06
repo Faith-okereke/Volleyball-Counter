@@ -24,7 +24,7 @@ function App() {
   };
 
   return (
-    <div className=" w-screen bg-yellow p-3">
+    <div className=" w-screen h-[100vh]  bg-yellow p-3">
       <h1 className="text-center pb-2 text-xl sm:text-2xl font-bold pt-4">
         Volleyball Point Tracker
       </h1>
@@ -90,6 +90,7 @@ function App() {
           </section>
         </div>
       </div>
+
       <div className="flex justify-center items-center mt-4">
         {teamA > 0 || teamB > 0 ? (
           <button
@@ -107,14 +108,6 @@ function App() {
           </button>
         )}
       </div>
-      <div>
-        <button
-          onClick={() => window.location.reload}
-          className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2"
-        >
-          New Game
-        </button>
-      </div>
       <div className="pb-1 pl-3">
         {round.map((item, index) => (
           <div className="flex" key={index}>
@@ -125,6 +118,16 @@ function App() {
           </div>
         ))}
       </div>
+   
+          <div className="pt-10 ">
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2 w-[100%]"
+            >
+              New Game
+            </button>
+          </div>
+  
     </div>
   );
 }
