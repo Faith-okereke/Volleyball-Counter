@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { TeamNames } from "./NameContext";
 export default function Modal() {
-  const { teamName, setTeamName } = useContext(TeamNames);
-  const [nameModal, setNameModal] = useState(true);
+  const {
+    teamName,
+    setTeamName,
+    gameNumber,
+    setGameNumber,
+    nameModal,
+    setNameModal,
+  } = useContext(TeamNames);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,18 +18,21 @@ export default function Modal() {
       [name]: value,
     }));
   };
+  const gamehandleChange = (e) => {
+    setGameNumber(e.target.value);
+  };
   const submitNames = (e) => {
     e.preventDefault();
     if (teamName.teamA && teamName.teamB) {
       setNameModal(false);
-    }else{
-      alert("Enter the teams' name dawg!")
+    } else {
+      alert("Enter the teams' name dawg!");
     }
   };
   return (
     <div className="flex flex-col items-center">
       {nameModal && (
-        <div className="absolute w-full bg-white rounded-lg h-screen pt-10 ">
+        <div className="absolute md:w-[40%] w-[80%] bg-blue-500 z-10  top-[10%] pb-20 pt-10 ">
           <h1 className="font-bold text-xl text-black text-center p-5">
             Enter Teams' Name
           </h1>
@@ -47,6 +56,17 @@ export default function Modal() {
                   value={teamName.teamB || ""}
                   name="teamB"
                   onChange={handleChange}
+                />
+              </div>
+              <div className="flex flex-col justify-center items-center gap-2">
+                <label htmlFor="game">Game</label>
+                <input
+                  className=" border-2 border-t-0 border-x-0 outline-0 border-blue-700 ml-4 "
+                  type="number"
+                  name="gameNumber"
+                  id="gameNumber"
+                  value={gameNumber}
+                  onChange={gamehandleChange}
                 />
               </div>
               <div className="flex justify-center items-center">

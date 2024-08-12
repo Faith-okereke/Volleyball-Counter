@@ -5,10 +5,12 @@ export const NameContext = ({ children }) => {
     teamA: "",
     teamB: "",
   });
+  const [gameNumber, setGameNumber] = useState(25);
+  const [nameModal, setNameModal] = useState(true);
 
   return (
     <div>
-      <TeamNames.Provider value={{ teamName, setTeamName }}>
+      <TeamNames.Provider value={{ teamName, setTeamName,gameNumber,setGameNumber,nameModal,setNameModal }}>
         {children}
       </TeamNames.Provider>
     </div>

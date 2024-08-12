@@ -4,17 +4,17 @@ import Modal from "./Modal";
 import { TeamNames } from "./NameContext";
 
 function App() {
-  const { teamName } = useContext(TeamNames);
+  const { teamName, gameNumber, nameModal } = useContext(TeamNames);
   const [teamA, setTeamA] = useState(0);
   const [teamB, setTeamB] = useState(0);
   const [round, setRound] = useState([]);
   console.log(teamName);
   const addTeamA = () => {
-    if (teamA < 25) setTeamA((prev) => prev + 1);
+    if (teamA < gameNumber) setTeamA((prev) => prev + 1);
   };
 
   const addTeamB = () => {
-    if (teamB < 25) setTeamB((prev) => prev + 1);
+    if (teamB < gameNumber) setTeamB((prev) => prev + 1);
   };
 
   const minusTeamA = () => setTeamA((prev) => Math.max(prev - 1, 0));
@@ -29,7 +29,7 @@ function App() {
   return (
     <div>
       <Modal />
-      <div className=" w-screen h-[100vh]  bg-yellow p-3">
+      <div className= {`w-screen h-[100vh]  bg-yellow p-3 ${nameModal? `pointer-events-none opacity-0`:``}`}>
         <h1 className="text-center pb-2 text-xl sm:text-2xl font-bold pt-4">
           Volleyball Point Tracker
         </h1>
@@ -47,7 +47,7 @@ function App() {
                 </div>
               )}
               <div className="flex justify-between ">
-                <p className="font-bold text-xl text-black">
+                <p className="font-bold text-lg text-black">
                   {teamName.teamA || "Team A"}
                 </p>
                 <input
@@ -68,7 +68,7 @@ function App() {
             </section>
             <section className="flex flex-col gap-3 mt-6">
               <div className="flex justify-between ">
-                <p className="font-bold text-xl text-black">
+                <p className="font-bold text-lg text-black">
                   {teamName.teamB || "Team B"}
                 </p>
                 <input
