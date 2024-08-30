@@ -1,13 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
-import Modal from "./Modal";
+import Modal from "./InputModal";
 import { TeamNames } from "./NameContext";
-
+import WinModal from "./WinModal";
 function App() {
-  const { teamName, gameNumber, nameModal } = useContext(TeamNames);
+  const { teamName, gameNumber, nameModal, openWinModal, setOpenWinModal } =
+    useContext(TeamNames);
   const [teamA, setTeamA] = useState(0);
   const [teamB, setTeamB] = useState(0);
   const [round, setRound] = useState([]);
+
   console.log(teamName);
   const addTeamA = () => {
     if (teamA < gameNumber) setTeamA((prev) => prev + 1);
@@ -24,47 +26,57 @@ function App() {
     setRound((prev) => [...prev, { teamA, teamB }]);
     setTeamA(0);
     setTeamB(0);
+    setOpenWinModal(true);
   };
 
   return (
-    <div>
+    <div className="">
       <Modal />
-      <div className= {`w-screen h-[100vh]  bg-yellow p-3 ${nameModal? `pointer-events-none opacity-0`:``}`}>
+      {openWinModal && <WinModal />}
+
+      <div
+        className={`w-screen h-[100vh]  bg-white p-3 ${
+          nameModal || openWinModal ? `pointer-events-none opacity-0` : ``
+        } `}
+      >
         <h1 className="text-center pb-2 text-xl sm:text-2xl font-bold pt-4">
           Volleyball Point Tracker
         </h1>
         <div className="allscores items-center gap-5 sm:flex-col">
           <div className="scoreBoard">
             <section className="flex flex-col gap-3">
-              {teamA > 0 && (
-                <div className="flex justify-end items-end">
-                  <button
-                    className="bg-blue-600 text-white rounded-[4px] w-10  border-0 cursor-pointer px-8 py-1 mb-2 font-bold text-center"
-                    onClick={minusTeamA}
-                  >
-                    -
-                  </button>
-                </div>
-              )}
               <div className="flex justify-between ">
                 <p className="font-bold text-lg text-black">
                   {teamName.teamA || "Team A"}
                 </p>
                 <input
-                  className="w-6 font-bold text-xl bg-yellow border-0 outline-0"
+                  className="w-6 font-bold text-xl  border-0 outline-0"
                   type="text"
                   name="teamA"
                   value={teamA}
-                  onChange={(e) => setTeamA(e.target.value)}
+                  disabled
                 />
               </div>
-
-              <button
-                className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 mb-2 font-bold"
-                onClick={addTeamA}
-              >
-                +
-              </button>
+              <div className="flex flex-row  align-middle items-center gap-2 w-full">
+                {teamA > 0 && (
+                  <div className="">
+                    <button
+                      className="bg-green-400 text-white rounded-[4px] w-[20%]  border-0 cursor-pointer px-8 py-1  font-bold text-center"
+                      onClick={minusTeamA}
+                    >
+                      -
+                    </button>
+                  </div>
+                )}
+                <button
+                  className={`bg-green-400 text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 font-bold ${
+                    teamA ? `w-[80%]` : `w-[100%]`
+                  }`}
+                  onClick={addTeamA}
+                >
+                  +
+                </button>
+              </div>
             </section>
             <section className="flex flex-col gap-3 mt-6">
               <div className="flex justify-between ">
@@ -72,51 +84,61 @@ function App() {
                   {teamName.teamB || "Team B"}
                 </p>
                 <input
-                  className="w-6 font-bold text-xl bg-yellow"
+                  className="w-6 font-bold text-xl outline-0 border-0"
                   type="text"
                   name="teamB"
                   value={teamB}
-                  onChange={(e) => setTeamA(e.target.value)}
+                  disabled
                 />
               </div>
-
-              <button
-                className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 mb-2 font-bold"
-                onClick={addTeamB}
-              >
-                +
-              </button>
-              {teamB > 0 && (
-                <div className="flex justify-end items-end">
-                  <button
-                    className="bg-blue-600 text-white rounded-[4px] border-0 w-10 cursor-pointer px-8 py-1 mb-2 font-bold"
-                    onClick={minusTeamB}
-                  >
-                    -
-                  </button>
-                </div>
-              )}
+              <div className="flex flex-row  align-middle items-center gap-2 w-full">
+                {teamB > 0 && (
+                  <div className="">
+                    <button
+                      className="bg-green-400 text-white rounded-[4px] border-0 w-[20%]  cursor-pointer px-8 py-1  font-bold"
+                      onClick={minusTeamB}
+                    >
+                      -
+                    </button>
+                  </div>
+                )}
+                <button
+                  className={`bg-green-400 text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 font-bold ${
+                    teamB ? `w-[80%]` : `w-[100%]`
+                  }`}
+                  onClick={addTeamB}
+                >
+                  +
+                </button>
+              </div>
             </section>
           </div>
         </div>
-
-        <div className="flex justify-center items-center mt-4">
-          {teamA > 0 || teamB > 0 ? (
-            <button
-              onClick={nextGame}
-              className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2"
-            >
-              Next Round
+        <div className="flex justify-between w-full mt-5">
+          <div className="flex justify-center items-center order-2">
+            {teamA > 0 || teamB > 0 ? (
+              <button
+                onClick={nextGame}
+                className="bg-green-400 text-white rounded-[4px] border-0 cursor-pointer p-[10px]"
+              >
+                Next Set
+              </button>
+            ) : (
+              <button
+                className="bg-green-300 text-white rounded-[4px] border-0 cursor-not-allowed p-[10px]"
+                disabled
+              >
+                Next Set
+              </button>
+            )}
+          </div>
+          <div>
+            <button className="bg-green-400 text-white rounded-[4px] border-0 cursor-pointer p-[10px] ">
+              Major Count
             </button>
-          ) : (
-            <button
-              className="bg-blue-400 text-white rounded-[4px] border-0 cursor-not-allowed p-[10px] mb-2"
-              disabled
-            >
-              Next Round
-            </button>
-          )}
+          </div>
         </div>
+
         <div className="pb-1 pl-3">
           {round.map((item, index) => (
             <div className="flex" key={index}>
@@ -131,7 +153,7 @@ function App() {
         <div className="pt-10 ">
           <button
             onClick={() => window.location.reload()}
-            className="bg-blue-600 text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2 w-[100%]"
+            className="bg-green-500 text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2 w-[100%]"
           >
             New Game
           </button>

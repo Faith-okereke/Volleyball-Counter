@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { TeamNames } from "./NameContext";
+import volleyball from "../public/volleyball.png";
+import backgroundImage from "../public/volleyballbg.jpg";
 export default function Modal() {
   const {
     teamName,
@@ -30,18 +32,25 @@ export default function Modal() {
     }
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center ">
+    <div style={{backgroundImage: `url(${backgroundImage})`}} className="bg-no-repeat bg-cover h-screen w-full  bg-center !important"></div>
       {nameModal && (
-        <div className="absolute md:w-[40%] w-[80%] bg-blue-500 z-10  top-[10%] pb-20 pt-10 ">
-          <h1 className="font-bold text-xl text-black text-center p-5">
-            Enter Teams' Name
-          </h1>
+        <div className="absolute px-5 z-10 top-[10%] pb-20 pt-10 shadow-custom backdrop-blur-sm bg-opacity-10 ">
+          <div className="flex  justify-center items-center">
+            <img className="w-10" src={volleyball} alt="" />
+            <h1 className="font-bold text-xl text-blue-500 text-center p-5">
+              Enter Teams' Name
+            </h1>
+          </div>
+
           <form onSubmit={submitNames} action="">
             <div className="flex  flex-col gap-4 justify-center items-center">
               <div className="flex flex-col justify-center items-center gap-2">
-                <label htmlFor="">Team A</label>
+                <label className="font-bold" htmlFor="">
+                  Team A
+                </label>
                 <input
-                  className="border-2 border-t-0 border-x-0 outline-0 border-blue-700 ml-4"
+                  className="border-0 outline-0 border-white ml-4 p-2 rounded-sm"
                   type="text"
                   value={teamName.teamA || ""}
                   name="teamA"
@@ -49,9 +58,11 @@ export default function Modal() {
                 />
               </div>
               <div className="flex flex-col justify-center items-center gap-2">
-                <label htmlFor="">Team B</label>
+                <label className="font-bold" htmlFor="">
+                  Team B
+                </label>
                 <input
-                  className=" border-2 border-t-0 border-x-0 outline-0 border-blue-700 ml-4"
+                  className=" border-0 outline-0 border-white ml-4 p-2 rounded-sm"
                   type="text"
                   value={teamName.teamB || ""}
                   name="teamB"
@@ -59,9 +70,11 @@ export default function Modal() {
                 />
               </div>
               <div className="flex flex-col justify-center items-center gap-2">
-                <label htmlFor="game">Game</label>
+                <label className="font-bold" htmlFor="game">
+                  Game Point
+                </label>
                 <input
-                  className=" border-2 border-t-0 border-x-0 outline-0 border-blue-700 ml-4 "
+                  className="  outline-0 border-0 ml-4 p-2 rounded-sm"
                   type="number"
                   name="gameNumber"
                   id="gameNumber"
@@ -69,9 +82,9 @@ export default function Modal() {
                   onChange={gamehandleChange}
                 />
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center align-middle ml-5">
                 <button
-                  className="bg-blue-700  mt-4 py-3 px-10 text-white font-bold rounded-md"
+                  className="bg-blue-500  mt-4 py-3 px-10 text-white font-bold rounded-md"
                   type="submit"
                 >
                   Start Game
