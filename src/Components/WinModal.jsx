@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TeamNames } from "./NameContext";
+import { TeamNames } from "../NameContext";
 
 export default function functionWinModal  ()  {
     const {openWinModal, setOpenWinModal} = useContext(TeamNames)

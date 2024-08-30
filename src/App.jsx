@@ -1,16 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./App.css";
-import Modal from "./InputModal";
+import Modal from "./Components/InputModal";
 import { TeamNames } from "./NameContext";
-import WinModal from "./WinModal";
+import WinModal from "./Components/WinModal";
+import Loading from "./Components/Loading";
+
 function App() {
   const { teamName, gameNumber, nameModal, openWinModal, setOpenWinModal } =
     useContext(TeamNames);
   const [teamA, setTeamA] = useState(0);
   const [teamB, setTeamB] = useState(0);
-  const [round, setRound] = useState([]);
+  const [scores, setScores] = useState([]);
+  const [minorCount, setMinorCount] = useState({ teamAm: 0, teamBm: 0 });
 
-  console.log(teamName);
   const addTeamA = () => {
     if (teamA < gameNumber) setTeamA((prev) => prev + 1);
   };
@@ -23,19 +25,34 @@ function App() {
   const minusTeamB = () => setTeamB((prev) => Math.max(prev - 1, 0));
 
   const nextGame = () => {
-    setRound((prev) => [...prev, { teamA, teamB }]);
+    setScores((prev) => [...prev, { teamA, teamB }]);
     setTeamA(0);
     setTeamB(0);
     setOpenWinModal(true);
   };
 
+  const calculateMinorCount = (scores) => {
+    let teamAWins = 0;
+    let teamBWins = 0;
+    console.log(scores);
+    // scores.forEach((set) => {
+    if (teamA > teamB) {
+      teamAWins++;
+    } else if (teamA < teamB) {
+      teamBWins++;
+    }
+    // });
+    setMinorCount({ teamAm: teamAWins, teamBm: teamBWins });
+    console.log(minorCount);
+  };
+
   return (
-    <div className="">
+    <div className="z-20">
       <Modal />
       {openWinModal && <WinModal />}
 
       <div
-        className={`w-screen h-[100vh]  bg-white p-3 ${
+        className={`w-screen h-[100vh] z-20 bg-white p-3 ${
           nameModal || openWinModal ? `pointer-events-none opacity-0` : ``
         } `}
       >
@@ -45,31 +62,29 @@ function App() {
         <div className="allscores items-center gap-5 sm:flex-col">
           <div className="scoreBoard">
             <section className="flex flex-col gap-3">
-              <div className="flex justify-between ">
+              <div className="flex justify-between">
                 <p className="font-bold text-lg text-black">
                   {teamName.teamA || "Team A"}
                 </p>
                 <input
-                  className="w-6 font-bold text-xl  border-0 outline-0"
+                  className="w-6 font-bold text-xl border-0 outline-0"
                   type="text"
                   name="teamA"
                   value={teamA}
                   disabled
                 />
               </div>
-              <div className="flex flex-row  align-middle items-center gap-2 w-full">
+              <div className="flex flex-row align-middle items-center gap-2 w-full">
                 {teamA > 0 && (
-                  <div className="">
-                    <button
-                      className="bg-green-400 text-white rounded-[4px] w-[20%]  border-0 cursor-pointer px-8 py-1  font-bold text-center"
-                      onClick={minusTeamA}
-                    >
-                      -
-                    </button>
-                  </div>
+                  <button
+                    className="bg-lightgreen text-white rounded-[4px] w-[20%] border-0 cursor-pointer px-8 py-1 font-bold text-center"
+                    onClick={minusTeamA}
+                  >
+                    -
+                  </button>
                 )}
                 <button
-                  className={`bg-green-400 text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 font-bold ${
+                  className={`bg-lightgreen text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 font-bold ${
                     teamA ? `w-[80%]` : `w-[100%]`
                   }`}
                   onClick={addTeamA}
@@ -79,31 +94,29 @@ function App() {
               </div>
             </section>
             <section className="flex flex-col gap-3 mt-6">
-              <div className="flex justify-between ">
+              <div className="flex justify-between">
                 <p className="font-bold text-lg text-black">
                   {teamName.teamB || "Team B"}
                 </p>
                 <input
-                  className="w-6 font-bold text-xl outline-0 border-0"
+                  className="w-6 font-bold text-xl border-0 outline-0"
                   type="text"
                   name="teamB"
                   value={teamB}
                   disabled
                 />
               </div>
-              <div className="flex flex-row  align-middle items-center gap-2 w-full">
+              <div className="flex flex-row align-middle items-center gap-2 w-full">
                 {teamB > 0 && (
-                  <div className="">
-                    <button
-                      className="bg-green-400 text-white rounded-[4px] border-0 w-[20%]  cursor-pointer px-8 py-1  font-bold"
-                      onClick={minusTeamB}
-                    >
-                      -
-                    </button>
-                  </div>
+                  <button
+                    className="bg-lightgreen text-white rounded-[4px] w-[20%] border-0 cursor-pointer px-8 py-1 font-bold"
+                    onClick={minusTeamB}
+                  >
+                    -
+                  </button>
                 )}
                 <button
-                  className={`bg-green-400 text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 font-bold ${
+                  className={`bg-lightgreen text-white rounded-[4px] border-0 cursor-pointer px-8 py-1 font-bold ${
                     teamB ? `w-[80%]` : `w-[100%]`
                   }`}
                   onClick={addTeamB}
@@ -119,13 +132,13 @@ function App() {
             {teamA > 0 || teamB > 0 ? (
               <button
                 onClick={nextGame}
-                className="bg-green-400 text-white rounded-[4px] border-0 cursor-pointer p-[10px]"
+                className="bg-lightgreen text-white rounded-[4px] border-0 cursor-pointer p-[10px]"
               >
                 Next Set
               </button>
             ) : (
               <button
-                className="bg-green-300 text-white rounded-[4px] border-0 cursor-not-allowed p-[10px]"
+                className="bg-lightgreen text-white rounded-[4px] border-0 cursor-not-allowed p-[10px]"
                 disabled
               >
                 Next Set
@@ -133,27 +146,30 @@ function App() {
             )}
           </div>
           <div>
-            <button className="bg-green-400 text-white rounded-[4px] border-0 cursor-pointer p-[10px] ">
+            <button
+              className="bg-lightgreen text-white rounded-[4px] border-0 cursor-pointer p-[10px]"
+              onClick={() => calculateMinorCount(scores)}
+            >
               Major Count
             </button>
           </div>
         </div>
 
         <div className="pb-1 pl-3">
-          {round.map((item, index) => (
+          {scores.map((item, index) => (
             <div className="flex" key={index}>
-              <div className="Board p-1 text-black text-lg font-bold">
+              <p className="p-1 text-black text-lg font-bold">
                 {teamName.teamA}: {item.teamA}, {teamName.teamB}: {item.teamB}
-              </div>
+              </p>
               <br />
             </div>
           ))}
         </div>
 
-        <div className="pt-10 ">
+        <div className="pt-10">
           <button
             onClick={() => window.location.reload()}
-            className="bg-green-500 text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2 w-[100%]"
+            className="bg-lightgreen text-white rounded-[4px] border-0 cursor-pointer p-[10px] mb-2 w-[100%]"
           >
             New Game
           </button>
