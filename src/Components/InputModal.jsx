@@ -38,7 +38,7 @@ export default function Modal() {
         <>
           <div
             style={{ backgroundImage: `url(${backgroundImage})` }}
-            className="bg-no-repeat bg-cover h-screen w-full  bg-center !important"
+            className="bg-no-repeat bg-cover h-screen w-full  bg-center !important backdrop-blur-sm bg-opacity-10 "
           ></div>
           <div className="absolute px-5 z-10 top-[10%] pb-20 pt-10 shadow-custom backdrop-blur-sm bg-opacity-10 ">
             <div className="flex  justify-center items-center gap-4">
@@ -49,7 +49,7 @@ export default function Modal() {
             </div>
 
             <form onSubmit={submitNames} action="">
-              <div className="flex  flex-col gap-4 justify-center items-center">
+              <div className="flex  flex-col gap-4 justify-center items-center ">
                 <div className="flex flex-col justify-center items-center gap-2">
                   <label className="font-bold" htmlFor="">
                     Team A

@@ -6,10 +6,18 @@ import WinModal from "./Components/WinModal";
 import Loading from "./Components/Loading";
 
 function App() {
-  const { teamName, gameNumber, nameModal, openWinModal, setOpenWinModal } =
-    useContext(TeamNames);
-  const [teamA, setTeamA] = useState(0);
-  const [teamB, setTeamB] = useState(0);
+  const {
+    teamName,
+    gameNumber,
+    nameModal,
+    openWinModal,
+    setOpenWinModal,
+    teamA,
+    setTeamA,
+    teamB,
+    setTeamB,
+  } = useContext(TeamNames);
+
   const [scores, setScores] = useState([]);
   const [minorCount, setMinorCount] = useState({ teamAm: 0, teamBm: 0 });
 

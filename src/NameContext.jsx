@@ -8,6 +8,8 @@ export const NameContext = ({ children }) => {
   const [gameNumber, setGameNumber] = useState(25);
   const [nameModal, setNameModal] = useState(true);
   const [openWinModal, setOpenWinModal] = useState(false);
+  const [teamA, setTeamA] = useState(0);
+  const [teamB, setTeamB] = useState(0);
 
   return (
     <div>
@@ -21,6 +23,10 @@ export const NameContext = ({ children }) => {
           setNameModal,
           openWinModal,
           setOpenWinModal,
+          teamA,
+          setTeamA,
+          teamB,
+          setTeamB
         }}
       >
         {children}
