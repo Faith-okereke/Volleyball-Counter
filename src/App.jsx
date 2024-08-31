@@ -4,7 +4,7 @@ import Modal from "./Components/InputModal";
 import { TeamNames } from "./NameContext";
 import WinModal from "./Components/WinModal";
 import Loading from "./Components/Loading";
-
+import background from "/public/volleyball3.png";
 function App() {
   const {
     teamName,
@@ -19,7 +19,7 @@ function App() {
   } = useContext(TeamNames);
 
   const [scores, setScores] = useState([]);
-  const [minorCount, setMinorCount] = useState({ teamAm: 0, teamBm: 0 });
+  const [majorCount, setMajorCount] = useState({ teamAm: 0, teamBm: 0 });
 
   const addTeamA = () => {
     if (teamA < gameNumber) setTeamA((prev) => prev + 1);
@@ -34,37 +34,37 @@ function App() {
 
   const nextGame = () => {
     setScores((prev) => [...prev, { teamA, teamB }]);
-    setTeamA(0);
-    setTeamB(0);
     setOpenWinModal(true);
   };
 
-  const calculateMinorCount = (scores) => {
+  const calculateMajorCount = (scores) => {
     let teamAWins = 0;
     let teamBWins = 0;
     console.log(scores);
-    // scores.forEach((set) => {
-    if (teamA > teamB) {
-      teamAWins++;
-    } else if (teamA < teamB) {
-      teamBWins++;
-    }
-    // });
-    setMinorCount({ teamAm: teamAWins, teamBm: teamBWins });
-    console.log(minorCount);
+    scores.forEach((set) => {
+      if (set.teamA > set.teamB) {
+        teamAWins++;
+      } else if (set.teamA < set.teamB) {
+        teamBWins++;
+      }
+    });
+    setMajorCount({ teamAm: teamAWins, teamBm: teamBWins });
   };
 
   return (
-    <div className="z-20">
+    <div
+     
+      className="z-20  "
+    >
       <Modal />
       {openWinModal && <WinModal />}
 
       <div
-        className={`w-screen h-[100vh] z-20 bg-white p-3 ${
+        className={`w-screen h-[100vh] z-20 bg-white ${
           nameModal || openWinModal ? `pointer-events-none opacity-0` : ``
         } `}
       >
-        <h1 className="text-center pb-2 text-xl sm:text-2xl font-bold pt-4">
+        <h1 className="text-center  text-xl sm:text-2xl font-bold p-4 bg-yellow mb-3">
           Volleyball Point Tracker
         </h1>
         <div className="allscores items-center gap-5 sm:flex-col">
@@ -156,7 +156,7 @@ function App() {
           <div>
             <button
               className="bg-lightgreen text-white rounded-[4px] border-0 cursor-pointer p-[10px]"
-              onClick={() => calculateMinorCount(scores)}
+              onClick={() => calculateMajorCount(scores)}
             >
               Major Count
             </button>
@@ -172,6 +172,11 @@ function App() {
               <br />
             </div>
           ))}
+        </div>
+        <div className="py-3">
+          <p className="p-2 text-white text-lg font-bold bg-yellow text-center">
+            {majorCount.teamAm} : {majorCount.teamBm}
+          </p>
         </div>
 
         <div className="pt-10">

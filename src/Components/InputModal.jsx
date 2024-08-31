@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { TeamNames } from "../NameContext";
-import volleyball from "../../public/volleyball.png";
+import volleyball from "../../public/volleyball2.png";
 import backgroundImage from "../../public/volleyballbg.jpg";
 import Loading from "./Loading";
 export default function Modal() {
@@ -42,7 +42,7 @@ export default function Modal() {
           ></div>
           <div className="absolute px-5 z-10 top-[10%] pb-20 pt-10 shadow-custom backdrop-blur-sm bg-opacity-10 ">
             <div className="flex  justify-center items-center gap-4">
-              <img className="w-10" src={volleyball} alt="" />
+              <img className="w-12" src={volleyball} alt="" />
               <h1 className="font-bold text-xl text-lightgreen text-center">
                 Enter Teams' Name
               </h1>
