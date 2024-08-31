@@ -60,7 +60,7 @@ function App() {
       {openWinModal && <WinModal />}
 
       <div
-        className={`w-screen h-[100vh] z-20 bg-white ${
+        className={`w-screen h-[100vh] z-20 bg-white p-3  ${
           nameModal || openWinModal ? `pointer-events-none opacity-0` : ``
         } `}
       >
